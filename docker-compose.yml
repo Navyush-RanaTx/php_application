@@ -5,7 +5,7 @@ services:
     build: .
     container_name: php-app
     ports:
-      - "8080:80"
+      - "8081:80"
     depends_on:
       - mysql-app
     networks:
