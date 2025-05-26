@@ -7,9 +7,9 @@ pipeline {
     }
 
     stages {
-        //stage('Checkout') {
-          //  steps {
-            //     git 'https://github.com/GoutamTx/php_application.git'
+      //  stage('Checkout') {
+        //    steps {
+          //      git 'https://github.com/GoutamTx/php_application.git'
             //}
         //}
 
@@ -26,9 +26,9 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh '''
-                    docker stack rm php-app || echo "No existing stack"
-                    sleep 10
+                bat '''
+                    docker stack rm php-app || echo "Stack not found, continuing"
+                    timeout 10
                     docker stack deploy -c docker-compose.yml php-app
                 '''
             }
