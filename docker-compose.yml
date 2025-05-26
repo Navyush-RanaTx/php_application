@@ -6,7 +6,7 @@ services:
     networks:
       - app-net
     ports:
-      - "3003:80"  # Expose port 80 in the container as 3003 on the host
+      - "3005:80"  # Expose port 80 in the container as 3003 on the host
     entrypoint: >
       sh -c "
         echo 'Waiting for MySQL...';
