@@ -2,48 +2,37 @@ version: "3.8"
 
 services:
   php-app:
-    image: goutam24/php-fullstack-app:latest
-    ports:
-      - "3003:80"
-    secrets:
-      - db_user
-      - db_password
-      - db_name
-    environment:
-      DB_HOST: mysql-app
-      DB_USER_FILE: /run/secrets/db_user
-      DB_PASSWORD_FILE: /run/secrets/db_password
-      DB_NAME_FILE: /run/secrets/db_name
+    image: goutam24/php-fullstack-app
     networks:
       - app-net
+    ports:
+      - "3003:80"  # Expose port 80 in the container as 3003 on the host
+    entrypoint: >
+      sh -c "
+        echo 'Waiting for MySQL...';
+        while ! nc -z mysql-app 3306; do
+          sleep 2;
+        done;
+        echo 'MySQL is up. Starting PHP app...';
+        php -S 0.0.0.0:80 -t /var/www/html"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
 
   mysql-app:
     image: mysql:5.7
-    secrets:
-      - db_user
-      - db_password
-      - db_name
     environment:
-      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_password
-      MYSQL_DATABASE_FILE: /run/secrets/db_name
-      MYSQL_USER_FILE: /run/secrets/db_user
-      MYSQL_PASSWORD_FILE: /run/secrets/db_password
-    volumes:
-      - db_data:/var/lib/mysql
-      - ./employees.sql:/docker-entrypoint-initdb.d/init.sql
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: demo_db
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
     networks:
       - app-net
-
-volumes:
-  db_data:
-
-secrets:
-  db_user:
-    external: true
-  db_password:
-    external: true
-  db_name:
-    external: true
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
 
 networks:
   app-net:
