@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'goutam24/php-fullstack-app'
-        DOCKER_HUB_CREDENTIALS = credentials('docker-hub-creds')
+        IMAGE_NAME = 'navyushrana/php-fullstack-app'
+        DOCKER_HUB_CREDENTIALS = credentials('dockerhub-creds')
     }
 
     stages {
