@@ -4,7 +4,7 @@ services:
   php-app:
     image: goutam24/php-fullstack-app:latest
     ports:
-      - "8081:80"
+      - "8090:80"
     depends_on:
       - mysql-app
     networks:
