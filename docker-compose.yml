@@ -2,8 +2,7 @@ version: '3.8'
 
 services:
   php-app:
-    build: .
-    container_name: php-app
+    image: goutam24/php-fullstack-app:latest
     ports:
       - "8081:80"
     depends_on:
