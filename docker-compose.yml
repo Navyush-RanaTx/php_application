@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   php-app:
-    image: goutam24/php-fullstack-app:latest
+    image: navyushrana/php-fullstack-app:latest
     ports:
       - "8090:80"
     depends_on:
