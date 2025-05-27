@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   php-app:
+    restart: "no"
     image: navyushrana/php-fullstack-app:latest
     ports:
       - "8090:80"
@@ -12,6 +13,7 @@ services:
 
   mysql-app:
     image: mysql:5.7
+    restart: "no"
     container_name: mysql-app
     ports:
       - "3306:3306"
