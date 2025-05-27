@@ -26,14 +26,13 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                bat '''
-                    docker-compose -f docker-compose.yml down
-                    timeout /t 10
-                    docker-compose -f docker-compose.yml up -d --remove-orphans --build
-
-                '''
+                script {
+                    bat 'docker swarm init || exit 0'
+                    bat 'docker stack rm php-app'
+                    bat 'timeout /t 10'
+                    bat 'docker stack deploy -c docker-compose.yml php-app'
+                }
             }
-        }
+         }
     }
-}
 
