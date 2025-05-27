@@ -25,7 +25,6 @@ pipeline {
                     bat 'docker-compose -f docker-compose.yml down'
 
                     // Wait a bit to let the network and volumes clean up
-                    bat 'timeout /t 5'
 
                     // Bring containers up using docker-compose
                     bat 'docker-compose -f docker-compose.yml up -d --build --remove-orphans'
