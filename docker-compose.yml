@@ -5,7 +5,7 @@ services:
     restart: "no"
     image: navyushrana/php-fullstack-app:latest
     ports:
-      - "8090:80"
+      - "3001:80"
     depends_on:
       - mysql-app
     networks:
