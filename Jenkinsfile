@@ -7,12 +7,6 @@ pipeline {
     }
 
     stages {
-        // stage('Checkout') {
-        //     steps {
-        //         git 'https://github.com/GoutamTx/php_application.git'
-        //     }
-        // }
-
         stage('Build & Push PHP Image') {
             steps {
                 script {
@@ -27,10 +21,14 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    bat 'docker swarm init || exit 0'
-                    bat 'docker stack rm php-app'
-                    bat 'timeout /t 10'
-                    bat 'docker stack deploy -c docker-compose.yml php-app'
+                    // Stop and remove any existing containers
+                    bat 'docker-compose -f docker-compose.yml down'
+
+                    // Wait a bit to let the network and volumes clean up
+                    bat 'timeout /t 5'
+
+                    // Bring containers up using docker-compose
+                    bat 'docker-compose -f docker-compose.yml up -d --build --remove-orphans'
                 }
             }
         }
