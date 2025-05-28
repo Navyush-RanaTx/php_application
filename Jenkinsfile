@@ -22,12 +22,12 @@ pipeline {
             steps {
                 script {
                     // Stop and remove any existing containers
-                    bat 'docker-compose -f docker-compose.yml down'
+                    bat 'docker-compose down'
 
                     // Wait a bit to let the network and volumes clean up
 
                     // Bring containers up using docker-compose
-                    bat 'docker-compose -f docker-compose.yml up -d --build --remove-orphans'
+                    bat 'docker-compose up -d --build --remove-orphans'
                 }
             }
         }
