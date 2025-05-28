@@ -2,8 +2,8 @@ version: '3.8'
 
 services:
   php-app:
+    build: .
     restart: "no"
-    image: navyushrana/php-fullstack-app:latest
     ports:
       - "3001:80"
     depends_on:
@@ -28,6 +28,20 @@ services:
     networks:
       - app-network
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: "no"
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: mysql-app
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: admin
+    depends_on:
+      - mysql-app
+    networks:
+      - app-network
+
 volumes:
   db_data:
 
@@ -35,3 +49,4 @@ networks:
   app-network:
     driver: overlay
     attachable: true
+
